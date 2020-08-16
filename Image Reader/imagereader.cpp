@@ -1,5 +1,5 @@
 // Import the required libraries.
-#include "ImageReader.h"
+#include "imagereader.h"
 #include <iostream>
 
 // Class constructor.
