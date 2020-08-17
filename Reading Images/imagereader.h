@@ -7,12 +7,17 @@
 class ImageReader
 {
     public:
+        // Constructor & deconstructor.
         ImageReader();
         ~ImageReader();
+
+        // Reading the images.
         cv::Mat readImage(cv::String);
         std::vector<cv::Mat> readImages(cv::String);
-        void displayImage(cv::Mat);
-        void displayImages(std::vector<cv::Mat>, int pos);
+
+        // Resizing the images.
+        cv::Mat resizeImage(cv::Mat, const int);
+        std::vector<cv::Mat> resizeImages(std::vector<cv::Mat>, const int);
 };
 
 #endif

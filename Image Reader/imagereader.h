@@ -9,9 +9,14 @@ class ImageReader
     private:
         std::string fileDir;
     public:
+        // Constructor & deconstructor.
         ImageReader(std::string);
         ~ImageReader();
+
+        // Read an image.
         cv::Mat readImage();
+
+        // Display an image.
         void displayImage(cv::Mat);
 };
 
