@@ -78,6 +78,39 @@ std::vector<cv::Mat> ImageReader::resizeImages(std::vector<cv::Mat> images, cons
     return resizedImages;
 }
 
+// Apply a homogenous blur to a single image.
+cv::Mat ImageReader::homogenBlur(cv::Mat image, const int KERNEL_SIZE)
+{
+    cv::Mat dst;
+    for(size_t k = 1; k < KERNEL_SIZE; k = k + 2)
+    {
+        cv::blur(image, dst, cv::Size(k, k), cv::Point(-1, -1));
+    }
+    return dst;
+}
+
+// Apply a homogenous blur to all the images.
+std::vector<cv::Mat> ImageReader::homogenBlurs(std::vector<cv::Mat> images, const int KERNEL_SIZE)
+{
+    std::vector<cv::Mat> blurredImages;
+    for(size_t k = 0; k < images.size(); ++k)
+    {
+        cv::Mat dst;
+
+        for(size_t i = 1; i < KERNEL_SIZE; i = i + 2)
+        {
+            cv::blur(images[k], dst, cv::Size(i, i), cv::Point(-1, -1));
+        }
+
+        if(dst.empty())
+        {
+            continue;
+        }
+        blurredImages.push_back(dst);
+    }
+    return blurredImages;
+}
+
 // Apply a gaussian blur to a single image.
 cv::Mat ImageReader::gaussianBlur(cv::Mat image, const int KERNEL_SIZE)
 {
@@ -132,6 +165,39 @@ std::vector<cv::Mat> ImageReader::medBlurs(std::vector<cv::Mat> images, const in
         for(size_t i = 1; i < KERNEL_SIZE; i = i + 2)
         {
             cv::medianBlur(images[k], dst, i);
+        }
+
+        if(dst.empty())
+        {
+            continue;
+        }
+        blurredImages.push_back(dst);
+    }
+    return blurredImages;
+}
+
+// Apply a bilateral filter to a single image.
+cv::Mat ImageReader::bilatFilter(cv::Mat image, const int KERNEL_SIZE)
+{
+    cv::Mat dst;
+    for(size_t k = 1; k < KERNEL_SIZE; k = k + 2)
+    {
+        cv::bilateralFilter(image, dst, k, k * 2, k / 2);
+    }
+    return dst;
+}
+
+// Apply a bilateral filter to all the images.
+std::vector<cv::Mat> ImageReader::bilatFilters(std::vector<cv::Mat> images, const int KERNEL_SIZE)
+{
+    std::vector<cv::Mat> blurredImages;
+    for(size_t k = 0; k < images.size(); ++k)
+    {
+        cv::Mat dst;
+
+        for(size_t i = 1; i < KERNEL_SIZE; i = i + 2)
+        {
+            cv::bilateralFilter(images[k], dst, k, k * 2, k / 2);
         }
 
         if(dst.empty())

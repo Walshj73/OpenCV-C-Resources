@@ -25,6 +25,10 @@ class ImageReader
         std::vector<cv::Mat> gaussianBlurs(std::vector<cv::Mat>, const int);
         cv::Mat medBlur(cv::Mat, const int);
         std::vector<cv::Mat> medBlurs(std::vector<cv::Mat>, const int);
+        cv::Mat homogenBlur(cv::Mat, const int);
+        sdt::vector<cv::Mat> homogenBlurs(std::vector<cv::Mat>, const int);
+        cv::Mat bilatFilter(cv::Mat, const int);
+        std::vector<cv::Mat> bilatFilters(std::vector<cv::Mat>, const int);
 
         // Display the images.
         void displayImage(cv::Mat);
